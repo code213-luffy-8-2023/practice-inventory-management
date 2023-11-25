@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const getProduct = async (id) => {
-  if (id == "new") return null;
+  if (!id || id == "new") return null;
   const res = await fetch(`http://localhost:3000/api/products/${id}`);
   if (!res.ok) {
     const data = await res.json();
@@ -110,7 +110,9 @@ export function EditProduct() {
           value={product.price}
           onChange={(e) => setProduct({ ...product, price: e.target.value })}
         />
-        <button className="btn btn-primary">Update</button>
+        <button className="btn btn-primary">
+          {product.id ? "Update" : "Create"}
+        </button>
         <Link to="/" className="link link-primary text-center w-full">
           Back
         </Link>
